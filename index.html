@@ -3,113 +3,96 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>房贷反推计算器</title>
+    <title>房屋配资真实收益率计算器</title>
     <link rel="stylesheet" href="./styles.css">
   </head>
   <body>
     <main class="app-shell">
-      <section class="intro-panel" aria-labelledby="page-title">
-        <div class="kicker">等额本息</div>
-        <h1 id="page-title">房贷反推计算器</h1>
-        <p>填三项，留空一项，按等额本息公式自动反推。</p>
-        <div class="formula-strip" aria-label="计算公式">
-          <span>月供</span>
-          <strong>=</strong>
-          <span>本金 × 月利率 × (1 + 月利率)<sup>期数</sup> ÷ [(1 + 月利率)<sup>期数</sup> - 1]</span>
-        </div>
-      </section>
-
-      <section class="workbench" aria-labelledby="calculator-title">
-        <div class="workbench-header">
-          <div>
-            <p class="eyebrow">参数输入</p>
-            <h2 id="calculator-title">填写三项</h2>
-          </div>
-          <div class="tool-actions" aria-label="工具操作">
-            <button class="secondary-button" type="button" id="sampleButton">填入示例</button>
-            <button class="secondary-button" type="button" id="clearButton">清空</button>
-          </div>
-        </div>
-
-        <form id="loanForm" novalidate>
-          <div class="input-grid">
-            <label class="field" data-key="principal" for="principal">
-              <span class="field-label">贷款金额</span>
-              <span class="field-control">
-                <input id="principal" name="principal" inputmode="decimal" autocomplete="off" placeholder="例如 100万">
-                <span class="unit">元</span>
-              </span>
-              <small>支持输入 1000000 或 100万</small>
-            </label>
-
-            <label class="field" data-key="annualRate" for="annualRate">
-              <span class="field-label">年利率</span>
-              <span class="field-control">
-                <input id="annualRate" name="annualRate" inputmode="decimal" autocomplete="off" placeholder="例如 4.2">
-                <span class="unit">%</span>
-              </span>
-              <small>按百分数输入，4.2 表示 4.2%</small>
-            </label>
-
-            <label class="field" data-key="monthlyPayment" for="monthlyPayment">
-              <span class="field-label">月供</span>
-              <span class="field-control">
-                <input id="monthlyPayment" name="monthlyPayment" inputmode="decimal" autocomplete="off" placeholder="例如 4890">
-                <span class="unit">元/月</span>
-              </span>
-              <small>等额本息下每月固定还款额</small>
-            </label>
-
-            <label class="field" data-key="months" for="months">
-              <span class="field-label">还款月数</span>
-              <span class="field-control">
-                <input id="months" name="months" inputmode="decimal" autocomplete="off" placeholder="例如 360">
-                <span class="unit">期</span>
-              </span>
-              <small>支持输入 360 或 30年</small>
-            </label>
-          </div>
-
-          <div class="form-footer">
-            <p id="helperText" class="helper-text" role="status">当前等待输入。</p>
-            <button class="primary-button" type="submit">计算缺失项</button>
-          </div>
-        </form>
-      </section>
-
-      <section class="result-panel" aria-labelledby="result-title">
+      <header class="header-band" aria-labelledby="page-title">
         <div>
-          <p class="eyebrow">计算结果</p>
-          <h2 id="result-title">结果</h2>
+          <p class="eyebrow">真实现金流</p>
+          <h1 id="page-title">房屋配资真实收益率计算器</h1>
+          <p class="lead">按每个订单录入配资支出、收租日期、结算回款和额外费用，自动计算 XIRR 年化收益率，并直接映射到合同里的 19 / 28 / 55 配资档位。</p>
         </div>
 
-        <div class="answer-box">
-          <span id="answerLabel">缺失项</span>
-          <strong id="answerValue">--</strong>
+        <div class="badge-row" aria-label="配资档位说明">
+          <span class="badge">19配资 ≥ 40%</span>
+          <span class="badge">28配资 30% - 39.99%</span>
+          <span class="badge">55配资 &lt; 30%</span>
+          <span class="badge">支持季度回款</span>
+          <span class="badge">支持维修 / 违约 / 民宿现金流</span>
         </div>
+      </header>
 
-        <div class="metric-grid" aria-label="还款概览">
-          <div class="metric">
-            <span>总还款</span>
-            <strong id="totalPayment">--</strong>
+      <div class="workspace">
+        <section class="editor-panel" aria-labelledby="orders-title">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">订单录入</p>
+              <h2 id="orders-title">每个订单按现金流来算</h2>
+            </div>
+            <div class="toolbar" aria-label="订单操作">
+              <button class="ghost" type="button" id="addOrderButton">新增订单</button>
+              <button class="ghost" type="button" id="fillDemoButton">填入示例</button>
+              <button class="ghost danger" type="button" id="clearButton">清空</button>
+            </div>
           </div>
-          <div class="metric">
-            <span>总利息</span>
-            <strong id="totalInterest">--</strong>
-          </div>
-          <div class="metric">
-            <span>月利率</span>
-            <strong id="monthlyRate">--</strong>
-          </div>
-        </div>
 
-        <div class="split-bar" aria-hidden="true">
-          <span id="principalBar"></span>
-          <span id="interestBar"></span>
-        </div>
+          <div class="order-list" id="orders" aria-live="polite"></div>
+        </section>
 
-        <p id="resultNote" class="result-note">计算完成后会显示本金与利息占比。</p>
-      </section>
+        <aside class="summary-panel" aria-labelledby="summary-title">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">测算结果</p>
+              <h2 id="summary-title">项目汇总</h2>
+            </div>
+          </div>
+
+          <div class="summary-hero">
+            <p class="summary-label">真实年化收益率</p>
+            <strong class="summary-rate" id="summaryRate">--</strong>
+            <p class="summary-hint" id="summaryHint">录入至少一笔支出和回款后即可测算。</p>
+          </div>
+
+          <div class="metric-grid" aria-label="项目概览">
+            <div class="metric">
+              <span>配资档位</span>
+              <strong id="summaryTier">--</strong>
+            </div>
+            <div class="metric">
+              <span>总投入</span>
+              <strong id="summaryOutflow">--</strong>
+            </div>
+            <div class="metric">
+              <span>总回款</span>
+              <strong id="summaryInflow">--</strong>
+            </div>
+            <div class="metric">
+              <span>净利润</span>
+              <strong id="summaryProfit">--</strong>
+            </div>
+            <div class="metric">
+              <span>回本日期</span>
+              <strong id="summaryPayback">--</strong>
+            </div>
+            <div class="metric">
+              <span>订单数量</span>
+              <strong id="summaryCount">0</strong>
+            </div>
+          </div>
+
+          <div class="action-bar">
+            <button class="primary-button" type="button" id="calculateButton">测算真实收益率</button>
+            <p class="status-text" id="statusText">等待录入订单现金流。</p>
+          </div>
+
+          <div class="result-list" id="orderResults" aria-live="polite"></div>
+          <div class="empty-state" id="emptyState">
+            你可以先填一个订单的配资支出、收租日期和结算回款，再补上维修、空置、中介等额外现金流，系统会按全部现金流计算真实收益率。
+          </div>
+        </aside>
+      </div>
     </main>
 
     <script src="./script.js"></script>
