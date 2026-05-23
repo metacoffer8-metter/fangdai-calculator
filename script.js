@@ -39,6 +39,7 @@
   const principalBar = document.querySelector("#principalBar");
   const interestBar = document.querySelector("#interestBar");
   const resultNote = document.querySelector("#resultNote");
+  const resultPanel = document.querySelector(".result-panel");
   const sampleButton = document.querySelector("#sampleButton");
   const clearButton = document.querySelector("#clearButton");
 
@@ -272,6 +273,12 @@
 
     helperText.className = "helper-text";
     helperText.textContent = `已反推出${fieldConfig[missingKey].label}。`;
+
+    if (window.matchMedia("(max-width: 640px)").matches) {
+      window.requestAnimationFrame(() => {
+        resultPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    }
   }
 
   function showError(message, className = "is-error") {

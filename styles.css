@@ -1,17 +1,17 @@
 :root {
   color-scheme: light;
-  --bg: #f4f7f7;
+  --bg: #f6f8f8;
   --panel: #ffffff;
-  --panel-soft: #eef5f2;
+  --panel-soft: #eef7f5;
   --text: #172026;
   --muted: #647178;
-  --line: #cbd8d6;
-  --accent: #0f766e;
-  --accent-strong: #0b5f59;
-  --accent-soft: #d9efeb;
+  --line: #d7e0de;
+  --accent: #0e7c72;
+  --accent-strong: #09645d;
+  --accent-soft: #dff2ef;
   --warning: #b45309;
   --error: #b42318;
-  --shadow: 0 20px 45px rgba(15, 47, 52, 0.12);
+  --shadow: 0 18px 42px rgba(22, 48, 52, 0.1);
   font-family: "Inter", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
 }
 
@@ -23,11 +23,7 @@ body {
   margin: 0;
   min-height: 100svh;
   color: var(--text);
-  background:
-    linear-gradient(90deg, rgba(15, 118, 110, 0.08) 1px, transparent 1px),
-    linear-gradient(180deg, rgba(15, 118, 110, 0.06) 1px, transparent 1px),
-    var(--bg);
-  background-size: 44px 44px;
+  background: var(--bg);
 }
 
 button,
@@ -55,8 +51,8 @@ button {
 .intro-panel,
 .workbench,
 .result-panel {
-  background: rgba(255, 255, 255, 0.92);
-  border: 1px solid rgba(203, 216, 214, 0.9);
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(215, 224, 222, 0.96);
   box-shadow: var(--shadow);
 }
 
@@ -72,8 +68,8 @@ button {
 .intro-panel h1 {
   max-width: 8em;
   margin: 18px 0;
-  font-size: 52px;
-  line-height: 1.02;
+  font-size: 48px;
+  line-height: 1.05;
   letter-spacing: 0;
 }
 
@@ -81,8 +77,8 @@ button {
   max-width: 30em;
   margin: 0;
   color: var(--muted);
-  font-size: 17px;
-  line-height: 1.75;
+  font-size: 16px;
+  line-height: 1.65;
 }
 
 .kicker,
@@ -109,8 +105,8 @@ button {
   padding-top: 24px;
   border-top: 1px solid var(--line);
   color: #344249;
-  font-size: 14px;
-  line-height: 1.7;
+  font-size: 13px;
+  line-height: 1.65;
 }
 
 .formula-strip strong {
@@ -234,7 +230,7 @@ button {
   outline: 0;
   background: transparent;
   color: var(--text);
-  font-size: 27px;
+  font-size: 26px;
   line-height: 1.15;
   font-weight: 760;
   letter-spacing: 0;
@@ -368,6 +364,7 @@ button {
   .app-shell {
     grid-template-columns: 1fr;
     align-content: start;
+    width: min(720px, calc(100% - 28px));
   }
 
   .intro-panel {
@@ -385,26 +382,81 @@ button {
 }
 
 @media (max-width: 640px) {
+  body {
+    background:
+      linear-gradient(180deg, #edf6f4 0, #f7f9f9 210px, #f7f9f9 100%);
+  }
+
   .app-shell {
-    width: min(100% - 20px, 560px);
-    padding: 10px 0;
-    gap: 10px;
+    width: 100%;
+    min-height: auto;
+    padding: 0 0 18px;
+    gap: 0;
   }
 
   .intro-panel,
   .workbench,
   .result-panel {
-    padding: 18px;
+    width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+    border-left: 0;
+    border-right: 0;
+    background: #fff;
+  }
+
+  .intro-panel {
+    min-height: 0;
+    display: block;
+    padding: calc(18px + env(safe-area-inset-top)) 18px 14px;
+    border: 0;
+    background: transparent;
+  }
+
+  .kicker {
+    padding: 5px 9px;
+    font-size: 12px;
+    background: rgba(255, 255, 255, 0.78);
+    border-color: rgba(9, 100, 93, 0.2);
   }
 
   .intro-panel h1 {
-    font-size: 34px;
+    margin: 12px 0 8px;
+    font-size: 30px;
+    line-height: 1.12;
+  }
+
+  .intro-panel p {
+    max-width: 23em;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .formula-strip {
+    display: none;
+  }
+
+  .workbench {
+    min-height: 0;
+    padding: 16px 14px 14px;
+    border-top: 1px solid rgba(215, 224, 222, 0.5);
+    border-bottom: 0;
   }
 
   .workbench-header,
   .form-footer {
     align-items: stretch;
     flex-direction: column;
+    gap: 12px;
+  }
+
+  .workbench h2,
+  .result-panel h2 {
+    font-size: 20px;
+  }
+
+  .eyebrow {
+    font-size: 12px;
   }
 
   .tool-actions,
@@ -412,20 +464,150 @@ button {
     width: 100%;
   }
 
-  .secondary-button {
-    flex: 1;
+  .tool-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
   }
 
-  .input-grid,
-  .metric-grid {
+  .secondary-button {
+    width: 100%;
+    min-height: 40px;
+    padding: 0 10px;
+    font-size: 14px;
+  }
+
+  .input-grid {
     grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .field {
+    min-height: 94px;
+    gap: 6px;
+    padding: 13px 14px 12px;
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+    background: #fff;
+  }
+
+  .field + .field {
+    margin-top: -1px;
+  }
+
+  .field:focus-within {
+    transform: none;
+  }
+
+  .field.is-missing {
+    background: var(--panel-soft);
+  }
+
+  .field-label {
+    font-size: 13px;
   }
 
   .field input {
-    font-size: 24px;
+    font-size: 25px;
+    line-height: 1.2;
+  }
+
+  .unit,
+  .field small {
+    font-size: 12px;
+  }
+
+  .form-footer {
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
+    margin: 0 -14px;
+    padding: 12px 14px calc(12px + env(safe-area-inset-bottom));
+    border-top: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(12px);
+  }
+
+  .helper-text {
+    width: 100%;
+    min-height: 20px;
+    font-size: 13px;
+  }
+
+  .primary-button {
+    min-height: 48px;
+    border-radius: 6px;
+    font-size: 16px;
+  }
+
+  .result-panel {
+    gap: 14px;
+    padding: 16px 14px 18px;
+    border-top: 8px solid #f1f4f4;
+  }
+
+  .answer-box {
+    min-height: 104px;
+    gap: 8px;
+    padding: 16px 0 18px;
   }
 
   .answer-box strong {
-    font-size: 32px;
+    font-size: 34px;
+    line-height: 1.12;
+  }
+
+  .metric-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .metric {
+    grid-template-columns: 72px minmax(0, 1fr);
+    align-items: center;
+    gap: 12px;
+    min-height: 46px;
+    padding: 10px 0;
+  }
+
+  .metric + .metric {
+    border-top: 1px solid var(--line);
+  }
+
+  .metric strong {
+    text-align: right;
+    font-size: 17px;
+  }
+
+  .split-bar {
+    height: 8px;
+  }
+
+  .result-note {
+    min-height: 20px;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+}
+
+@media (max-width: 380px) {
+  .intro-panel h1 {
+    font-size: 27px;
+  }
+
+  .field input {
+    font-size: 22px;
+  }
+
+  .answer-box strong {
+    font-size: 29px;
+  }
+
+  .metric {
+    grid-template-columns: 66px minmax(0, 1fr);
   }
 }
