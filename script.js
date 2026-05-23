@@ -240,6 +240,15 @@
     return "适合 55 配资档位";
   }
 
+  function addMonths(dateString, months) {
+    const [year, month, day] = dateString.split("-").map(Number);
+    const result = new Date(year, month - 1 + months, day);
+    const y = result.getFullYear();
+    const m = String(result.getMonth() + 1).padStart(2, "0");
+    const d = String(result.getDate()).padStart(2, "0");
+    return `${y}-${m}-${d}`;
+  }
+
   function getOrderCashflows(order) {
     const flows = [];
     const errors = [];
@@ -588,35 +597,29 @@
     fillDemoButton.addEventListener("click", () => {
       state.orders = [];
       state.nextOrderId = 1;
+      const quarterlyInflows = [];
+      for (let date = "2027-04-20"; date <= "2032-10-20"; date = addMonths(date, 3)) {
+        quarterlyInflows.push({
+          type: "季度租金回款",
+          date,
+          amount: 5100,
+          note: "客户按季度付款",
+        });
+      }
       createOrder({
-        name: "样例订单 A",
-        startDate: "2026-01-10",
-        amount: 120000,
-        endDate: "2026-04-10",
-        returnAmount: 132000,
+        name: "2027年3月样例订单",
         outflows: [
-          { type: "首期配资", date: "2026-01-10", amount: 120000, note: "首次配资投入" },
-          { type: "维修垫付", date: "2026-02-15", amount: 8000, note: "中途维修" },
+          {
+            type: "配资支出",
+            date: "2027-03-20",
+            amount: 50359,
+            note: "已折算放款当日收到的 1620 元",
+          },
         ],
         inflows: [
-          { type: "三个月租金", date: "2026-04-10", amount: 135000, note: "客户三个月一付" },
+          ...quarterlyInflows,
         ],
-        extras: [
-          { type: "押金返还", date: "2026-04-11", amount: 20000, note: "押金退回" },
-        ],
-      });
-      createOrder({
-        name: "样例订单 B",
-        outflows: [
-          { type: "配资投入", date: "2026-02-01", amount: 90000, note: "第二套房源" },
-        ],
-        inflows: [
-          { type: "首笔回款", date: "2026-05-01", amount: 98000, note: "季度收租" },
-          { type: "二笔回款", date: "2026-08-01", amount: 102000, note: "续租上调" },
-        ],
-        extras: [
-          { type: "违约金", date: "2026-06-12", amount: 6000, note: "提前解约补偿" },
-        ],
+        extras: [],
       });
       render();
     });
